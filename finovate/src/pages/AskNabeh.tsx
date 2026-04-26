@@ -1,243 +1,148 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Send, Bot, User, Sparkles } from "lucide-react";
+import { useCallback, useState } from "react";
+import { Sparkles } from "lucide-react";
+import { AccessGate } from "../components/ask-nabeh/AccessGate";
+import { StepIndicator } from "../components/ask-nabeh/StepIndicator";
+import { StepUpload } from "../components/ask-nabeh/StepUpload";
+import { StepTemplates } from "../components/ask-nabeh/StepTemplates";
+import { StepChat } from "../components/ask-nabeh/StepChat";
+import { usePlaygroundSession } from "../hooks/usePlaygroundSession";
 
-const suggestedQuestions = [
-  "What solutions do you offer for core banking?",
-  "How can AI improve my financial operations?",
-  "Tell me about your payment solutions",
-  "What makes Finovate different?",
-];
-
-const predefinedResponses: Record<string, string> = {
-  default:
-    "Thank you for your question! Our team of experts is here to help. For detailed information about our solutions, please contact us directly or explore our solutions page.",
-  "core banking":
-    "Our Core Banking Solutions provide modern, cloud-native infrastructure designed for scalability and security. We offer real-time processing, API-first design, and built-in regulatory compliance to help you transform your banking operations.",
-  ai: "Our AI and Data solutions leverage advanced machine learning to provide predictive analytics, fraud detection, and automated insights. We help financial institutions reduce costs by up to 40% while improving decision-making accuracy.",
-  payment:
-    "Our Payment Solutions offer multi-currency support, instant settlement, and advanced fraud detection. We process transactions securely and reliably with 99.9% uptime, helping businesses scale globally.",
-  different:
-    "Finovate stands out with our deep fintech expertise, cutting-edge technology, and commitment to client success. We've served 500+ clients worldwide and consistently deliver measurable results with bank-grade security and reliability.",
+type UploadedFile = {
+	fileId: string;
+	name: string;
+	sizeBytes?: number;
+	status: "queued" | "processing" | "ready" | "failed";
 };
 
-interface Message {
-  id: string;
-  text: string;
-  sender: "user" | "ai";
-  timestamp: Date;
-}
-
 export default function AskNabeh() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      text: "Hello! I'm Nabeh, your AI assistant. How can I help you today?",
-      sender: "ai",
-      timestamp: new Date(),
-    },
-  ]);
-  const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+	const [accessToken, setAccessToken] = useState<string | null>(null);
+	const [isAccessVerified, setIsAccessVerified] = useState(false);
+	const { sessionId, sessionError, createSession, resetSession } =
+		usePlaygroundSession();
 
-  const getResponse = (question: string): string => {
-    const lowerQuestion = question.toLowerCase();
+	const [step, setStep] = useState(1);
+	const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
+	const [selectedTemplateId, setSelectedTemplateId] =
+		useState("general_assistant");
 
-    for (const [key, response] of Object.entries(predefinedResponses)) {
-      if (key !== "default" && lowerQuestion.includes(key)) {
-        return response;
-      }
-    }
+	const handleUploadComplete = useCallback((files: UploadedFile[]) => {
+		setUploadedFiles(files);
+		setStep(2);
+	}, []);
 
-    return predefinedResponses.default;
-  };
+	const handleTemplateComplete = useCallback((templateId: string) => {
+		setSelectedTemplateId(templateId);
+		setStep(3);
+	}, []);
 
-  const handleSend = (text?: string) => {
-    const messageText = text || input;
-    if (!messageText.trim()) return;
+	const handleReset = useCallback(() => {
+		setUploadedFiles([]);
+		setSelectedTemplateId("general_assistant");
+		setStep(1);
+		resetSession();
+		if (accessToken) createSession(accessToken);
+	}, [accessToken, createSession, resetSession]);
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      text: messageText,
-      sender: "user",
-      timestamp: new Date(),
-    };
+	return (
+		<div className="pt-20 min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+				<div className="text-center mb-8">
+					<div className="inline-flex items-center gap-3 mb-4">
+						<div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-700 flex items-center justify-center">
+							<Sparkles className="text-white" size={32} />
+						</div>
+						<h1 className="text-4xl bg-gradient-to-r from-[#0066cc] to-[#00a3cc] bg-clip-text text-transparent">
+							Ask Nabeeh
+						</h1>
+					</div>
+					<p className="text-slate-600">
+						Upload your documents, pick a style, and test a live chatbot.
+					</p>
+				</div>
 
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setIsTyping(true);
+				<div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 p-6 sm:p-10">
+					{!isAccessVerified ? (
+						<AccessGate
+							onVerified={({ accessToken: token }) => {
+								setAccessToken(token);
+								setIsAccessVerified(true);
+								createSession(token);
+							}}
+						/>
+					) : (
+						<>
+							<StepIndicator currentStep={step} />
 
-    setTimeout(() => {
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: getResponse(messageText),
-        sender: "ai",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-      setIsTyping(false);
-    }, 1000);
-  };
+							{!sessionId && !sessionError ? (
+								<div className="flex flex-col items-center justify-center py-16 gap-4">
+									<svg
+										className="w-8 h-8 animate-spin text-[#0066cc]"
+										fill="none"
+										viewBox="0 0 24 24">
+										<circle
+											className="opacity-25"
+											cx="12"
+											cy="12"
+											r="10"
+											stroke="currentColor"
+											strokeWidth="4"
+										/>
+										<path
+											className="opacity-75"
+											fill="currentColor"
+											d="M4 12a8 8 0 018-8v8H4z"
+										/>
+									</svg>
+									<p className="text-sm text-slate-500">
+										Setting up your sandbox…
+									</p>
+								</div>
+							) : null}
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
+							{sessionError ? (
+								<div className="text-center py-16">
+									<p className="text-red-600 font-medium mb-2">
+										Failed to start playground
+									</p>
+									<p className="text-sm text-slate-500">{sessionError}</p>
+									<button
+										onClick={() => window.location.reload()}
+										className="mt-4 px-6 py-2.5 bg-[#0066cc] text-white rounded-2xl text-sm font-semibold hover:bg-[#0052a3] transition-colors">
+										Try Again
+									</button>
+								</div>
+							) : null}
 
-  return (
-    <div className="pt-20 min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
-        >
-          <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0066cc] to-[#00a3cc] flex items-center justify-center">
-              <Sparkles className="text-white" size={32} />
-            </div>
-            <h1 className="text-4xl bg-gradient-to-r from-[#0066cc] to-[#00a3cc] bg-clip-text text-transparent">
-              Ask Nabeh
-            </h1>
-          </div>
-          <p className="text-gray-600">
-            Meet Nabeeh Chatbot — your intelligent assistant that understands
-            your documents like a human expert.{" "}
-          </p>
-        </motion.div>
+							{sessionId && !sessionError ? (
+								<>
+									{step === 1 ? (
+										<StepUpload
+											sessionId={sessionId}
+											onComplete={handleUploadComplete}
+										/>
+									) : null}
+									{step === 2 ? (
+										<StepTemplates onComplete={handleTemplateComplete} />
+									) : null}
+									{step === 3 ? (
+										<StepChat
+											sessionId={sessionId}
+											uploadedFiles={uploadedFiles}
+											selectedTemplateId={selectedTemplateId}
+											onReset={handleReset}
+										/>
+									) : null}
+								</>
+							) : null}
+						</>
+					)}
+				</div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-white rounded-3xl shadow-2xl overflow-hidden"
-        >
-          <div className="h-[600px] flex flex-col">
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
-              <AnimatePresence>
-                {messages.map((message) => (
-                  <motion.div
-                    key={message.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className={`flex gap-3 ${
-                      message.sender === "user" ? "flex-row-reverse" : ""
-                    }`}
-                  >
-                    <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                        message.sender === "user"
-                          ? "bg-[#0066cc]"
-                          : "bg-gradient-to-br from-purple-500 to-pink-500"
-                      }`}
-                    >
-                      {message.sender === "user" ? (
-                        <User className="text-white" size={20} />
-                      ) : (
-                        <Bot className="text-white" size={20} />
-                      )}
-                    </div>
-
-                    <div
-                      className={`max-w-[70%] rounded-2xl px-5 py-3 ${
-                        message.sender === "user"
-                          ? "bg-[#0066cc] text-white"
-                          : "bg-gray-100 text-gray-800"
-                      }`}
-                    >
-                      <p className="leading-relaxed">{message.text}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-
-              {isTyping && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex gap-3"
-                >
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                    <Bot className="text-white" size={20} />
-                  </div>
-                  <div className="bg-gray-100 rounded-2xl px-5 py-3">
-                    <div className="flex gap-1">
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{
-                          repeat: Infinity,
-                          duration: 0.6,
-                          delay: 0,
-                        }}
-                        className="w-2 h-2 rounded-full bg-gray-400"
-                      />
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{
-                          repeat: Infinity,
-                          duration: 0.6,
-                          delay: 0.2,
-                        }}
-                        className="w-2 h-2 rounded-full bg-gray-400"
-                      />
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{
-                          repeat: Infinity,
-                          duration: 0.6,
-                          delay: 0.4,
-                        }}
-                        className="w-2 h-2 rounded-full bg-gray-400"
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </div>
-
-            {messages.length === 1 && (
-              <div className="px-6 pb-4">
-                <p className="text-sm text-gray-600 mb-3">
-                  Suggested questions:
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {suggestedQuestions.map((question, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleSend(question)}
-                      className="px-4 py-2 bg-blue-50 text-[#0066cc] rounded-full text-sm hover:bg-blue-100 transition-colors"
-                    >
-                      {question}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div className="border-t border-gray-100 p-4">
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Type your message..."
-                  className="flex-1 px-4 py-3 rounded-full border border-gray-200 focus:outline-none focus:border-[#0066cc] transition-colors"
-                />
-                <button
-                  onClick={() => handleSend()}
-                  disabled={!input.trim()}
-                  className="w-12 h-12 rounded-full bg-[#0066cc] text-white flex items-center justify-center hover:bg-[#0052a3] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <Send size={20} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </div>
-  );
+				<p className="text-center text-xs text-slate-500 mt-6">
+					Your documents are processed in an isolated sandbox and automatically
+					deleted after 30 minutes.
+				</p>
+			</div>
+		</div>
+	);
 }
