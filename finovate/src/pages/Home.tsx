@@ -472,155 +472,110 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import {
-  Brain,
-  Cloud,
-  CreditCard,
-  Shield,
-  Zap,
-  TrendingUp,
-  ArrowRight,
-  CheckCircle2,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import walkingVideo from "../assets/people-walking.mp4";
 import CinematicExplorePanel from "../components/CinematicExplorePanel";
 import SolutionsSection from "../components/solutions/SolutionsSection";
 
 const solutions = [
-  {
-    id: "core-banking-digital",
-    title: "Core Banking & Digital Module",
-    description:
-      "Core banking solutions powered by FLEXCUBE, Sarraf, and modern payment systems.",
-  },
-  {
-    id: "fraud-risk-intelligence",
-    title: "Fraud Detection & Risk Intelligence",
-    description:
-      "Detect fraud and manage risk with real-time insights using Quantexa.",
-  },
-  {
-    id: "process-workflow-automation",
-    title: "Business Process & Workflow Automation",
-    description:
-      "Automate workflows with Nintex, OpenText, AppWorks, and UiPath.",
-  },
-  {
-    id: "content-data-management",
-    title: "Content & Data Management",
-    description:
-      "Manage and analyze data with OpenText, Postgres EDB, and Tableau.",
-  },
-  {
-    id: "integration-api-management",
-    title: "Integration & API Management",
-    description: "Connect systems seamlessly with APIs and BPC integration.",
-  },
-  {
-    id: "collaboration-ai-assistant",
-    title: "Collaboration & AI Assistant",
-    description:
-      "Boost teamwork with Slack integration and the Nabeeh AI assistant.",
-  },
-];
-
-const features = [
-  {
-    icon: Shield,
-    title: "Bank-Grade Security",
-    description: "Protect critical systems with enterprise-grade security.",
-  },
-  {
-    icon: Zap,
-    title: "Fast Performance",
-    description: "Deliver reliable speed for high-volume digital operations.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Scalable Growth",
-    description:
-      "Scale confidently as your business and customer base expands.",
-  },
-  {
-    icon: Brain,
-    title: "AI-Powered Insights",
-    description:
-      "Use intelligent analytics to drive better strategic decisions.",
-  },
-  {
-    icon: Cloud,
-    title: "Cloud-Ready Architecture",
-    description:
-      "Deploy modern services across secure, flexible cloud platforms.",
-  },
-  {
-    icon: CreditCard,
-    title: "Payment Innovation",
-    description: "Launch secure and seamless digital payment experiences.",
-  },
+	{
+		id: "core-banking-digital",
+		title: "Core Banking & Digital Module",
+		description:
+			"Core banking solutions powered by FLEXCUBE, Sarraf, and modern payment systems."
+	},
+	{
+		id: "fraud-risk-intelligence",
+		title: "Fraud Detection & Risk Intelligence",
+		description:
+			"Detect fraud and manage risk with real-time insights using Quantexa."
+	},
+	{
+		id: "process-workflow-automation",
+		title: "Business Process & Workflow Automation",
+		description:
+			"Automate workflows with Nintex, OpenText, AppWorks, and UiPath."
+	},
+	{
+		id: "content-data-management",
+		title: "Content & Data Management",
+		description:
+			"Manage and analyze data with OpenText, Postgres EDB, and Tableau."
+	},
+	{
+		id: "integration-api-management",
+		title: "Integration & API Management",
+		description: "Connect systems seamlessly with APIs and BPC integration."
+	},
+	{
+		id: "collaboration-ai-assistant",
+		title: "Collaboration & AI Assistant",
+		description:
+			"Boost teamwork with Slack integration and the Nabeeh AI assistant."
+	}
 ];
 
 const partners = [
-  "Oracle",
-  "UiPath",
-  "Nintex",
-  "OpenText",
-  "Quantexa",
-  "BPC",
-  "Salesforce",
-  "Tableau",
-  "MuleSoft",
-  "Slack",
-  "EDB Postgres",
+	"Oracle",
+	"UiPath",
+	"Nintex",
+	"OpenText",
+	"Quantexa",
+	"BPC",
+	"Salesforce",
+	"Tableau",
+	"MuleSoft",
+	"Slack",
+	"EDB Postgres"
 ];
 
 const scrollingPartners = [...partners, ...partners];
 
 const testimonials = [
-  {
-    quote:
-      "Finovate helped us modernize operations and accelerate our digital roadmap with confidence.",
-    author: "Ahmed Hassan",
-    role: "Chief Digital Officer, Regional Bank",
-    image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop",
-  },
-  {
-    quote:
-      "Their team delivered an enterprise-grade solution that was secure, scalable, and easy to adopt.",
-    author: "Mona Khaled",
-    role: "Head of Technology, Fintech Group",
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop",
-  },
-  {
-    quote:
-      "From integration to automation, Finovate transformed how our teams collaborate and deliver value.",
-    author: "Omar Nabil",
-    role: "Operations Director, Payments Company",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop",
-  },
+	{
+		quote:
+			"Finovate helped us modernize operations and accelerate our digital roadmap with confidence.",
+		author: "Ahmed Hassan",
+		role: "Chief Digital Officer, Regional Bank",
+		image:
+			"https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop"
+	},
+	{
+		quote:
+			"Their team delivered an enterprise-grade solution that was secure, scalable, and easy to adopt.",
+		author: "Mona Khaled",
+		role: "Head of Technology, Fintech Group",
+		image:
+			"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop"
+	},
+	{
+		quote:
+			"From integration to automation, Finovate transformed how our teams collaborate and deliver value.",
+		author: "Omar Nabil",
+		role: "Operations Director, Payments Company",
+		image:
+			"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop"
+	}
 ];
 
 export default function Home() {
-  const heroSectionRef = useRef<HTMLElement | null>(null);
-  const [isHeroFlipped, setIsHeroFlipped] = useState(false);
-  const [isHeroHidden, setIsHeroHidden] = useState(false);
-  const [isExploreHidden, setIsExploreHidden] = useState(true);
-  const hideTimerRef = useRef<number | null>(null);
-  const exploreTimerRef = useRef<number | null>(null);
+	const heroSectionRef = useRef<HTMLElement | null>(null);
+	const [isHeroFlipped, setIsHeroFlipped] = useState(false);
+	const [isHeroHidden, setIsHeroHidden] = useState(false);
+	const [isExploreHidden, setIsExploreHidden] = useState(true);
+	const hideTimerRef = useRef<number | null>(null);
+	const exploreTimerRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    const updateFlipState = () => {
-      const rect = heroSectionRef.current?.getBoundingClientRect();
-      if (!rect) return;
+	useEffect(() => {
+		const updateFlipState = () => {
+			const rect = heroSectionRef.current?.getBoundingClientRect();
+			if (!rect) return;
 
-      const isSectionVisible = rect.bottom > 0 && rect.top < window.innerHeight;
-      if (!isSectionVisible) {
-        setIsHeroFlipped(false);
-        return;
-      }
+			const isSectionVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+			if (!isSectionVisible) {
+				setIsHeroFlipped(false);
+				return;
+			}
 
       setIsHeroFlipped((prev) => {
         if (prev) return rect.top < 20;
@@ -628,15 +583,15 @@ export default function Home() {
       });
     };
 
-    updateFlipState();
-    window.addEventListener("scroll", updateFlipState, { passive: true });
-    window.addEventListener("resize", updateFlipState);
+		updateFlipState();
+		window.addEventListener("scroll", updateFlipState, { passive: true });
+		window.addEventListener("resize", updateFlipState);
 
-    return () => {
-      window.removeEventListener("scroll", updateFlipState);
-      window.removeEventListener("resize", updateFlipState);
-    };
-  }, []);
+		return () => {
+			window.removeEventListener("scroll", updateFlipState);
+			window.removeEventListener("resize", updateFlipState);
+		};
+	}, []);
 
   useEffect(() => {
     if (hideTimerRef.current) {
