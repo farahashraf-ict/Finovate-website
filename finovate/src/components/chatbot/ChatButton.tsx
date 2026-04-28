@@ -11,7 +11,7 @@ export function ChatButton({
 
 	return (
 		<div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 safe-area-bottom safe-area-right animate-float">
-			<div className="relative w-[320px] sm:w-[360px] md:w-[400px]">
+			<div className="relative w-[240px] sm:w-[280px] md:w-[320px]">
 				<div className="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-xl z-20">
 					<div className="absolute inset-0 rounded-full bg-[#d9ebff] opacity-50 animate-pulse" />
 					<div className="absolute top-0 right-0 w-4 h-4 sm:w-5 sm:h-5 bg-emerald-500 border-2 border-white rounded-full" />
