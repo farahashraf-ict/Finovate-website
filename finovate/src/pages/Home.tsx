@@ -1,16 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import {
-  Brain,
-  Cloud,
-  CreditCard,
-  Shield,
-  Zap,
-  TrendingUp,
-  ArrowRight,
-  CheckCircle2,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import walkingVideo from "../assets/people-walking.mp4";
 import globeVideo from "../assets/Globe_Data_Visualization.mp4";
 import SolutionsSection from "../components/solutions/SolutionsSection";
@@ -70,50 +61,50 @@ const partners = [
 const scrollingPartners = [...partners, ...partners];
 
 const testimonials = [
-  {
-    quote:
-      "Finovate helped us modernize operations and accelerate our digital roadmap with confidence.",
-    author: "Ahmed Hassan",
-    role: "Chief Digital Officer, Regional Bank",
-    image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop",
-  },
-  {
-    quote:
-      "Their team delivered an enterprise-grade solution that was secure, scalable, and easy to adopt.",
-    author: "Mona Khaled",
-    role: "Head of Technology, Fintech Group",
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop",
-  },
-  {
-    quote:
-      "From integration to automation, Finovate transformed how our teams collaborate and deliver value.",
-    author: "Omar Nabil",
-    role: "Operations Director, Payments Company",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop",
-  },
+	{
+		quote:
+			"Finovate helped us modernize operations and accelerate our digital roadmap with confidence.",
+		author: "Ahmed Hassan",
+		role: "Chief Digital Officer, Regional Bank",
+		image:
+			"https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop"
+	},
+	{
+		quote:
+			"Their team delivered an enterprise-grade solution that was secure, scalable, and easy to adopt.",
+		author: "Mona Khaled",
+		role: "Head of Technology, Fintech Group",
+		image:
+			"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop"
+	},
+	{
+		quote:
+			"From integration to automation, Finovate transformed how our teams collaborate and deliver value.",
+		author: "Omar Nabil",
+		role: "Operations Director, Payments Company",
+		image:
+			"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop"
+	}
 ];
 
 export default function Home() {
-  const heroSectionRef = useRef<HTMLElement | null>(null);
-  const [isHeroFlipped, setIsHeroFlipped] = useState(false);
-  const [isHeroHidden, setIsHeroHidden] = useState(false);
-  const [isExploreHidden, setIsExploreHidden] = useState(true);
-  const hideTimerRef = useRef<number | null>(null);
-  const exploreTimerRef = useRef<number | null>(null);
+	const heroSectionRef = useRef<HTMLElement | null>(null);
+	const [isHeroFlipped, setIsHeroFlipped] = useState(false);
+	const [isHeroHidden, setIsHeroHidden] = useState(false);
+	const [isExploreHidden, setIsExploreHidden] = useState(true);
+	const hideTimerRef = useRef<number | null>(null);
+	const exploreTimerRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    const updateFlipState = () => {
-      const rect = heroSectionRef.current?.getBoundingClientRect();
-      if (!rect) return;
+	useEffect(() => {
+		const updateFlipState = () => {
+			const rect = heroSectionRef.current?.getBoundingClientRect();
+			if (!rect) return;
 
-      const isSectionVisible = rect.bottom > 0 && rect.top < window.innerHeight;
-      if (!isSectionVisible) {
-        setIsHeroFlipped(false);
-        return;
-      }
+			const isSectionVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+			if (!isSectionVisible) {
+				setIsHeroFlipped(false);
+				return;
+			}
 
       setIsHeroFlipped((prev) => {
         if (prev) return rect.top < 20;
@@ -121,15 +112,15 @@ export default function Home() {
       });
     };
 
-    updateFlipState();
-    window.addEventListener("scroll", updateFlipState, { passive: true });
-    window.addEventListener("resize", updateFlipState);
+		updateFlipState();
+		window.addEventListener("scroll", updateFlipState, { passive: true });
+		window.addEventListener("resize", updateFlipState);
 
-    return () => {
-      window.removeEventListener("scroll", updateFlipState);
-      window.removeEventListener("resize", updateFlipState);
-    };
-  }, []);
+		return () => {
+			window.removeEventListener("scroll", updateFlipState);
+			window.removeEventListener("resize", updateFlipState);
+		};
+	}, []);
 
   useEffect(() => {
     if (hideTimerRef.current) {

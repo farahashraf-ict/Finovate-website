@@ -88,7 +88,7 @@ import "swiper/css";
 import SolutionCard, { type SolutionItem } from "./SolutionCard";
 
 type SolutionsSectionProps = {
-  solutions: SolutionItem[];
+	solutions: SolutionItem[];
 };
 
 export default function SolutionsSection({ solutions }: SolutionsSectionProps) {
