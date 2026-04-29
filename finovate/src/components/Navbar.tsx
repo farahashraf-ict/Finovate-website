@@ -1,69 +1,73 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { SolutionsMenu } from "./SolutionsMenu";
 import logo from "../assets/finovate-logo.webp";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const lastScrollYRef = useRef(0);
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 20);
+      setIsNavbarVisible(
+        currentScrollY < lastScrollYRef.current || currentScrollY < 10,
+      );
+      lastScrollYRef.current = currentScrollY;
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
     { name: "Home", path: "/home" },
-    { name: "About", path: "/about" },
     { name: "Solutions", path: "/solutions" },
     { name: "Ask Nabeh", path: "/ask-nabeh" },
     { name: "Partners", path: "/partners" },
     { name: "Blog", path: "/blog" },
     { name: "Careers", path: "/careers" },
     { name: "Contact", path: "/contact" },
+    { name: "About", path: "/about" },
   ];
 
   return (
     <nav
-      className={`bg-gradient-to-br from-slate-900 to-slate-800 text-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "shadow-lg opacity-90" : ""
-      }`}
+      className={`text-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-slate-900/90 shadow-lg"
+          : "bg-gradient-to-br from-slate-900 to-slate-800"
+      } ${isNavbarVisible ? "translate-y-0" : "-translate-y-full"}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center space-x-2">
             <img src={logo} alt="Finovate" className="h-10 w-auto" />
-            {/* <span className="text-xl text-[#0066cc]">
-              Finovate
-            </span> */}
           </Link>
 
-          <div className="hidden lg:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`text-sm transition-colors duration-200 relative group ${
-                  location.pathname === link.path
-                    ? "text-[#0066cc]"
-                    : "text-white-500 hover:text-[#0066cc]"
-                }`}
-              >
-                {link.name}
-                <span
-                  className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[#0066cc] transform origin-left transition-transform duration-200 ${
+          <div className="hidden lg:flex items-center space-x-3">
+            {navLinks.map((link) =>
+              link.name === "Solutions" ? (
+                <SolutionsMenu key={link.path} />
+              ) : (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`text-sm transition-colors duration-200 px-4 py-2 rounded-full ${
                     location.pathname === link.path
-                      ? "scale-x-100"
-                      : "scale-x-0 group-hover:scale-x-100"
+                      ? "bg-gray-500/30 text-white"
+                      : "text-white hover:bg-gray-500/20"
                   }`}
-                />
-              </Link>
-            ))}
+                >
+                  {link.name}
+                </Link>
+              ),
+            )}
             <Link
               to="/contact"
               className="px-6 py-2.5 bg-[#0066cc] text-white rounded-full hover:bg-[#0052a3] transition-all duration-200 shadow-md hover:shadow-lg"

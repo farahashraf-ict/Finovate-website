@@ -150,7 +150,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-24 bg-gradient-to-br from-slate-50 to-blue-50">
+      <section className="py-24 bg-gradient-to-br from-[#0066cc] to-[#00a3cc] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12">
             <motion.div
@@ -159,13 +159,13 @@ export default function About() {
               viewport={{ once: true }}
               className="bg-white rounded-3xl p-10 shadow-lg"
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0066cc] to-[#00a3cc] flex items-center justify-center mb-6">
+              {/* <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0066cc] to-[#00a3cc] flex items-center justify-center mb-6">
                 <Target className="text-white" size={32} />
-              </div>
-              <h3 className="text-3xl mb-4">Our Mission</h3>
+              </div> */}
+              <h3 className="text-3xl mb-4 text-black font-extrabold">Our Mission</h3>
               <p className="text-gray-600 leading-relaxed">
                 Finovate accelerates digital transformation across financial
-                institutions through intelligent, AI-powered solutions. By
+                institutions through intelligent, AI-powered solutions. <br/>By
                 leveraging global technologies from leading international
                 vendors, we help banks enhance performance, drive innovation,
                 and achieve measurable business impact in the digital era.
@@ -179,10 +179,10 @@ export default function About() {
               transition={{ delay: 0.2 }}
               className="bg-white rounded-3xl p-10 shadow-lg"
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-6">
+              {/* <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-6">
                 <Eye className="text-white" size={32} />
-              </div>
-              <h3 className="text-3xl mb-4">Our Vision</h3>
+              </div> */}
+              <h3 className="text-3xl mb-4 text-black font-extrabold">Our Vision</h3>
               <p className="text-gray-600 leading-relaxed">
                 We aim to be the first-choice partner for banking and AI
                 solutions in Egypt and Africa by empowering businesses with

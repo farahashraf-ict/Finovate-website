@@ -43,23 +43,23 @@ const partners = [
       import.meta.url,
     ).href,
   },
-  {
-    name: "Tableau",
-    logo: new URL("../assets/partnersLogo/tableau-picture.jpg", import.meta.url)
-      .href,
-  },
-  {
-    name: "MuleSoft",
-    logo: new URL(
-      "../assets/partnersLogo/mulesoft-picture.jpg",
-      import.meta.url,
-    ).href,
-  },
-  {
-    name: "Slack",
-    logo: new URL("../assets/partnersLogo/slack-picture.png", import.meta.url)
-      .href,
-  },
+  // {
+  //   name: "Tableau",
+  //   logo: new URL("../assets/partnersLogo/tableau-picture.jpg", import.meta.url)
+  //     .href,
+  // },
+  // {
+  //   name: "MuleSoft",
+  //   logo: new URL(
+  //     "../assets/partnersLogo/mulesoft-picture.jpg",
+  //     import.meta.url,
+  //   ).href,
+  // },
+  // {
+  //   name: "Slack",
+  //   logo: new URL("../assets/partnersLogo/slack-picture.png", import.meta.url)
+  //     .href,
+  // },
   {
     name: "EDB Postgres",
     logo: new URL("../assets/partnersLogo/edb-picture.png", import.meta.url)

@@ -108,7 +108,7 @@ export default function SolutionsSection({ solutions }: SolutionsSectionProps) {
   };
 
   return (
-    <section className="overflow-hidden bg-[#0087CD] py-16 sm:py-20 lg:py-24">
+    <section className="overflow-hidden bg-[#EDFAFF] py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -117,8 +117,8 @@ export default function SolutionsSection({ solutions }: SolutionsSectionProps) {
           viewport={{ once: true }}
           className="mb-10 sm:mb-14 lg:mb-16 text-center"
         >
-          <h2 className="mb-3 text-3xl sm:text-4xl text-white">Our Solutions</h2>
-          <p className="mx-auto max-w-2xl text-base sm:text-xl text-white/80">
+          <h2 className="mb-3 text-3xl sm:text-4xl text-black">Our Solutions</h2>
+          <p className="mx-auto max-w-2xl text-base sm:text-xl text-black">
             AI-powered solutions for smarter, faster digital transformation.
           </p>
         </motion.div>
@@ -196,8 +196,8 @@ export default function SolutionsSection({ solutions }: SolutionsSectionProps) {
               onClick={() => goTo(index)}
               className={`rounded-full transition-all duration-300 ${
                 index === activeIndex
-                  ? "w-6 h-2.5 bg-white"
-                  : "w-2.5 h-2.5 bg-white/40 hover:bg-white/70"
+                  ? "w-6 h-2.5 bg-[#0087CD]"
+                  : "w-2.5 h-2.5 bg-[#0087CD]/30 hover:bg-[#0087CD]/70"
               }`}
             />
           ))}
