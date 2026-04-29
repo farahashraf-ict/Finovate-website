@@ -1,9 +1,5 @@
 import { Link } from "react-router-dom";
-import {
-  FaLinkedinIn,
-  FaFacebookF,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaLinkedinIn, FaFacebookF, FaEnvelope } from "react-icons/fa";
 import logo from "../assets/finovate-logo.webp";
 
 export default function Footer() {
@@ -11,11 +7,22 @@ export default function Footer() {
     Solutions: [
       { name: "Core Banking", path: "/solutions/core-banking-digital" },
       { name: "Fraud detection", path: "/solutions/fraud-risk-intelligence" },
-      { name: "Process automation", path: "/solutions/process-workflow-automation" },
-      { name: "Enterprise content", path: "/solutions/content-data-management" },
-      { name: "Integration & API management", path: "/solutions/integration-api-management" },
-      { name: "Digital Collaboration & AI Assistant", path: "/solutions/digital-collaboration-ai" }
-
+      {
+        name: "Process automation",
+        path: "/solutions/process-workflow-automation",
+      },
+      {
+        name: "Enterprise content",
+        path: "/solutions/content-data-management",
+      },
+      {
+        name: "Integration & API management",
+        path: "/solutions/integration-api-management",
+      },
+      {
+        name: "Digital Collaboration & AI Assistant",
+        path: "/solutions/digital-collaboration-ai",
+      },
     ],
     Company: [
       { name: "About Us", path: "/about" },
@@ -41,7 +48,7 @@ export default function Footer() {
             </div>
             <p className="text-gray-300 mb-6 max-w-sm">
               Transforming financial services with innovative technology
-              solutions. Empowering businesses to thrive in the digital economy.
+              Empowering businesses to thrive in the digital economy.
             </p>
             <div className="flex space-x-4">
               <a

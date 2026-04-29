@@ -253,11 +253,21 @@ export default function Contact() {
       <section className="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl overflow-hidden shadow-xl">
-            <div className="aspect-[21/9] bg-gray-200 relative">
-              <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                <MapPin size={48} />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-[#0066cc]/10 to-[#00a3cc]/10" />
+            <div className="aspect-[21/9] bg-gray-100 relative">
+              <iframe
+                title="Finovate location"
+                className="absolute inset-0 w-full h-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=Saeed%20qutub%2C%202GM9%2BQJ6%2C%20New%20Cairo%201%2C%20Cairo%20Governorate%204743030&output=embed"
+              />
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Saeed%20qutub%2C%202GM9%2BQJ6%2C%20New%20Cairo%201%2C%20Cairo%20Governorate%204743030"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open Finovate location in Google Maps"
+                className="absolute inset-0"
+              />
             </div>
           </div>
         </div>

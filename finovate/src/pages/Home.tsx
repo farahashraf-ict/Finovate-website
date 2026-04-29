@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import walkingVideo from "../assets/people-walking.mp4";
 import globeVideo from "../assets/Globe_Data_Visualization.mp4";
+import robotImage from "../assets/robot.png";
 import SolutionsSection from "../components/solutions/SolutionsSection";
 
 const solutions = [
@@ -61,50 +62,50 @@ const partners = [
 const scrollingPartners = [...partners, ...partners];
 
 const testimonials = [
-	{
-		quote:
-			"Finovate helped us modernize operations and accelerate our digital roadmap with confidence.",
-		author: "Ahmed Hassan",
-		role: "Chief Digital Officer, Regional Bank",
-		image:
-			"https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop"
-	},
-	{
-		quote:
-			"Their team delivered an enterprise-grade solution that was secure, scalable, and easy to adopt.",
-		author: "Mona Khaled",
-		role: "Head of Technology, Fintech Group",
-		image:
-			"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop"
-	},
-	{
-		quote:
-			"From integration to automation, Finovate transformed how our teams collaborate and deliver value.",
-		author: "Omar Nabil",
-		role: "Operations Director, Payments Company",
-		image:
-			"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop"
-	}
+  {
+    quote:
+      "Finovate helped us modernize operations and accelerate our digital roadmap with confidence.",
+    author: "Ahmed Hassan",
+    role: "Chief Digital Officer, Regional Bank",
+    image:
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop",
+  },
+  {
+    quote:
+      "Their team delivered an enterprise-grade solution that was secure, scalable, and easy to adopt.",
+    author: "Mona Khaled",
+    role: "Head of Technology, Fintech Group",
+    image:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop",
+  },
+  {
+    quote:
+      "From integration to automation, Finovate transformed how our teams collaborate and deliver value.",
+    author: "Omar Nabil",
+    role: "Operations Director, Payments Company",
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop",
+  },
 ];
 
 export default function Home() {
-	const heroSectionRef = useRef<HTMLElement | null>(null);
-	const [isHeroFlipped, setIsHeroFlipped] = useState(false);
-	const [isHeroHidden, setIsHeroHidden] = useState(false);
-	const [isExploreHidden, setIsExploreHidden] = useState(true);
-	const hideTimerRef = useRef<number | null>(null);
-	const exploreTimerRef = useRef<number | null>(null);
+  const heroSectionRef = useRef<HTMLElement | null>(null);
+  const [isHeroFlipped, setIsHeroFlipped] = useState(false);
+  const [isHeroHidden, setIsHeroHidden] = useState(false);
+  const [isExploreHidden, setIsExploreHidden] = useState(true);
+  const hideTimerRef = useRef<number | null>(null);
+  const exploreTimerRef = useRef<number | null>(null);
 
-	useEffect(() => {
-		const updateFlipState = () => {
-			const rect = heroSectionRef.current?.getBoundingClientRect();
-			if (!rect) return;
+  useEffect(() => {
+    const updateFlipState = () => {
+      const rect = heroSectionRef.current?.getBoundingClientRect();
+      if (!rect) return;
 
-			const isSectionVisible = rect.bottom > 0 && rect.top < window.innerHeight;
-			if (!isSectionVisible) {
-				setIsHeroFlipped(false);
-				return;
-			}
+      const isSectionVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+      if (!isSectionVisible) {
+        setIsHeroFlipped(false);
+        return;
+      }
 
       setIsHeroFlipped((prev) => {
         if (prev) return rect.top < 20;
@@ -112,15 +113,15 @@ export default function Home() {
       });
     };
 
-		updateFlipState();
-		window.addEventListener("scroll", updateFlipState, { passive: true });
-		window.addEventListener("resize", updateFlipState);
+    updateFlipState();
+    window.addEventListener("scroll", updateFlipState, { passive: true });
+    window.addEventListener("resize", updateFlipState);
 
-		return () => {
-			window.removeEventListener("scroll", updateFlipState);
-			window.removeEventListener("resize", updateFlipState);
-		};
-	}, []);
+    return () => {
+      window.removeEventListener("scroll", updateFlipState);
+      window.removeEventListener("resize", updateFlipState);
+    };
+  }, []);
 
   useEffect(() => {
     if (hideTimerRef.current) {
@@ -311,6 +312,72 @@ export default function Home() {
 
       {/* ── Solutions ── */}
       <SolutionsSection solutions={solutions} />
+
+      {/* ── AI Chatbot ── */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <div className="text-center lg:text-left">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#192435] mb-5">
+                Chat with Your Documents Instantly
+              </h2>
+              <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
+                Upload any document and ask questions in plain language. Our AI
+                assistant reads your files and responds with clear, accurate
+                answers so you can move faster and stay focused.
+              </p>
+
+              <div className="space-y-3 mb-8">
+                {[
+                  "Upload PDFs and files in seconds",
+                  "Ask anything and get simple answers",
+                  "Boost productivity with AI assistance",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center justify-center lg:justify-start gap-3 text-gray-700"
+                  >
+                    <CheckCircle2 className="text-[#0066cc]" size={18} />
+                    <span className="text-sm sm:text-base">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <Link
+                to="/ask-nabeh"
+                className="inline-flex items-center justify-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 bg-[#0066cc] text-white rounded-full hover:bg-[#0052a3] transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+              >
+                Try the Chatbot
+                <ArrowRight
+                  size={18}
+                  className="transition-transform group-hover:translate-x-1"
+                />
+              </Link>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <motion.div
+                animate={{
+                  scale: [1, 1.12, 1],
+                  y: [0, -10, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="w-full max-w-sm sm:max-w-md"
+              >
+                <img
+                  src={robotImage}
+                  alt="AI chatbot assistant"
+                  className="w-full h-auto object-contain"
+                />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ── Partners scroll ── */}
       <section className="relative py-16 sm:py-20 lg:py-24 bg-white overflow-hidden">
